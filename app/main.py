@@ -86,3 +86,6 @@ async def create_recipe(
 async def on_startup():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+@app.get("/")
+async def root():
+    return {"message": "Recipe API is running"}
