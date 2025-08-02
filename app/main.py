@@ -86,7 +86,10 @@ async def get_recipe(
 
 
 @app.post("/recipes", response_model=RecipeDetailOut, status_code=201)
-async def create_recipe(recipe: RecipeCreate, session: AsyncSession = Depends(get_session)):
+async def create_recipe(
+    recipe: RecipeCreate,
+    session: AsyncSession = Depends(get_session),
+):
     db_recipe = Recipe(**recipe.dict())
     session.add(db_recipe)
     await session.commit()
