@@ -72,7 +72,10 @@ async def get_recipes(session: AsyncSession = Depends(get_session)):
 
 
 @app.get("/recipes/{recipe_id}", response_model=RecipeDetailOut)
-async def get_recipe(recipe_id: int, session: AsyncSession = Depends(get_session)):
+async def get_recipe(
+    recipe_id: int,
+    session: AsyncSession = Depends(get_session),
+):
     recipe = await session.get(Recipe, recipe_id)
     if not recipe:
         raise HTTPException(status_code=404, detail="Recipe not found")
