@@ -1,14 +1,15 @@
-from fastapi import FastAPI, HTTPException, Depends
+from collections.abc import AsyncGenerator
+from typing import List
+
+from fastapi import Depends, FastAPI, HTTPException
+from pydantic import BaseModel
+from sqlalchemy import Integer, String, Text, asc, desc, select
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
-    create_async_engine,
     async_sessionmaker,
+    create_async_engine,
 )
-from sqlalchemy.orm import declarative_base, Mapped, mapped_column
-from sqlalchemy import Integer, String, Text, select, desc, asc
-from pydantic import BaseModel
-from typing import List
-from collections.abc import AsyncGenerator
+from sqlalchemy.orm import Mapped, declarative_base, mapped_column
 
 DATABASE_URL = "sqlite+aiosqlite:///./recipes.db"
 
