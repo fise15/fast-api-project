@@ -1,11 +1,27 @@
-from fastapi.testclient import TestClient
 import sys
 import os
+from fastapi.testclient import TestClient
+
+# Добавляем корень проекта в sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from app.main import app
 
 client = TestClient(app)
 
+
 def test_root():
     response = client.get("/")
     assert response.status_code == 200
+    assert response.json() == {"message": "Recipe API is running"}
+
+
+def test_get_recipes():
+    response = client.get("/recipes")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+
+
+def test_post_recipe_validation():
+    response = client.post("/recipes", json={})
+    assert response.status_code == 422
