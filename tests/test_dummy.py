@@ -1,11 +1,10 @@
 import sys
 import os
 from fastapi.testclient import TestClient
+from app.main import app
 
 # Добавляем корень проекта в sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from app.main import app
 
 client = TestClient(app)
 
