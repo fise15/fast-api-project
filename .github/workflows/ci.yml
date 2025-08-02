@@ -28,17 +28,22 @@ jobs:
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
 
-      - name: Lint: flake8
-        run: flake8 app tests
+      - name: Lint flake8
+        run: |
+          flake8 app tests
 
-      - name: Lint: isort
-        run: isort app tests --check-only --diff
+      - name: Lint isort
+        run: |
+          isort app tests --check-only --diff
 
-      - name: Lint: black
-        run: black app tests --check --diff
+      - name: Lint black
+        run: |
+          black app tests --check --diff
 
-      - name: Type-check: mypy
-        run: mypy app
+      - name: Type-check mypy
+        run: |
+          mypy app
 
       - name: Run tests
-        run: pytest
+        run: |
+          pytest
