@@ -1,7 +1,8 @@
 import asyncio
+
 import pytest
 
-from app.main import engine, Base
+from app.main import Base, engine
 
 
 @pytest.fixture(scope="session", autouse=True)
