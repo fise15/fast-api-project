@@ -4,6 +4,7 @@ from sqlalchemy.orm import declarative_base, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text, select, desc, asc
 from pydantic import BaseModel
 from typing import List
+from collections.abc import AsyncGenerator
 
 DATABASE_URL = "sqlite+aiosqlite:///./recipes.db"
 
@@ -49,7 +50,7 @@ class RecipeDetailOut(RecipeOut):
     description: str
 
 
-async def get_session() -> AsyncSession:
+async def get_session() -> AsyncGenerator[AsyncSession, None]:
     async with async_session() as session:
         yield session
 
