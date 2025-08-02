@@ -1,6 +1,8 @@
-import sys
 import os
+import sys
+
 from fastapi.testclient import TestClient
+
 from app.main import app
 
 # Добавляем корень проекта в sys.path
