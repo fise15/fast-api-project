@@ -9,13 +9,16 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
-from sqlalchemy.orm import Mapped, declarative_base, mapped_column
+from sqlalchemy.orm import Mapped, DeclarativeBase, mapped_column
 
 DATABASE_URL = "sqlite+aiosqlite:///./recipes.db"
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 async_session = async_sessionmaker(engine, expire_on_commit=False)
-Base = declarative_base()
+
+# Define Declarative Base class after engine and session setup
+class Base(DeclarativeBase):
+    pass
 
 app = FastAPI(
     title="Recipe Book API",
