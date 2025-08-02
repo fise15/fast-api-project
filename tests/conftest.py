@@ -1,10 +1,8 @@
-
-
-
 import asyncio
 import pytest
 
 from app.main import engine, Base
+
 
 @pytest.fixture(scope="session", autouse=True)
 def create_test_db():
