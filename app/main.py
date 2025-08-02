@@ -1,5 +1,9 @@
 from fastapi import FastAPI, HTTPException, Depends
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    create_async_engine,
+    async_sessionmaker,
+)
 from sqlalchemy.orm import declarative_base, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text, select, desc, asc
 from pydantic import BaseModel
@@ -13,7 +17,9 @@ async_session = async_sessionmaker(engine, expire_on_commit=False)
 Base = declarative_base()
 
 app = FastAPI(
-    title="Recipe Book API", description="API for a recipe book app", version="1.0.0"
+    title="Recipe Book API",
+    description="API for a recipe book app",
+    version="1.0.0",
 )
 
 
@@ -57,7 +63,10 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
 
 @app.get("/recipes", response_model=List[RecipeOut])
 async def get_recipes(session: AsyncSession = Depends(get_session)):
-    stmt = select(Recipe).order_by(desc(Recipe.views), asc(Recipe.cook_time))
+    stmt = select(Recipe).order_by(
+        desc(Recipe.views),
+        asc(Recipe.cook_time),
+    )
     result = await session.execute(stmt)
     return result.scalars().all()
 
@@ -87,6 +96,8 @@ async def create_recipe(
 async def on_startup():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+
 @app.get("/")
 async def root():
     return {"message": "Recipe API is running"}
